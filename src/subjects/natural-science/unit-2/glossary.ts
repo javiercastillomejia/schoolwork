@@ -1,0 +1,30 @@
+import type { GlossaryTerm } from '../../../core/types';
+
+/** Los 25 términos del glosario (los 14 primeros vienen del libro). */
+export const GLOSSARY: GlossaryTerm[] = [
+  { word: "Vertebrates", translation: "Vertebrados", definition: "Animals with an internal skeleton and a backbone." },
+  { word: "Invertebrates", translation: "Invertebrados", definition: "Animals without an internal skeleton and a backbone." },
+  { word: "Fish", translation: "Peces", definition: "Aquatic animals that breathe underwater through gills." },
+  { word: "Worms", translation: "Gusanos", definition: "Animals with long bodies, sometimes divided into segments or rings." },
+  { word: "Plants", translation: "Plantas", definition: "Living organisms that make their own food through photosynthesis." },
+  { word: "Carnivores", translation: "Carnívoros", definition: "Animals that only feed on meat." },
+  { word: "Herbivores", translation: "Herbívoros", definition: "Animals that feed on plants." },
+  { word: "Omnivores", translation: "Omnívoros", definition: "Animals that eat meat and plants." },
+  { word: "Nutrition", translation: "Nutrición", definition: "The vital function of living organisms needing food, water and oxygen to survive." },
+  { word: "Interaction", translation: "Relación", definition: "The vital function which allows us to obtain information from the world and to react to it." },
+  { word: "Reproduction", translation: "Reproducción", definition: "The vital function of producing new offspring." },
+  { word: "Asexual", translation: "Asexual", definition: "The type of reproduction in which a living organism reproduces itself." },
+  { word: "Sexual", translation: "Sexual", definition: "The type of reproduction that needs a male and a female sex cell." },
+  { word: "Effectors", translation: "Efectores", definition: "The parts of our bodies that respond to nerve signals." },
+  { word: "Oviparous", translation: "Ovíparos", definition: "The name given to living organisms that lay eggs." },
+  { word: "Viviparous", translation: "Vivíparos", definition: "Animals whose babies grow inside the mother, who gives birth." },
+  { word: "Echinoderm", translation: "Equinodermo", definition: "A type of invertebrate usually shaped like a star or a ball." },
+  { word: "Autotroph", translation: "Autótrofo", definition: "A living organism that makes its own food (plants)." },
+  { word: "Heterotroph", translation: "Heterótrofo", definition: "A living organism that feeds on other living organisms (animals)." },
+  { word: "Scavenger", translation: "Carroñero", definition: "A carnivore that eats dead animals it hasn't caught." },
+  { word: "Cold-blooded", translation: "De sangre fría", definition: "Body temperature varies with the environment." },
+  { word: "Warm-blooded", translation: "De sangre caliente", definition: "Constant body temperature." },
+  { word: "Photosynthesis", translation: "Fotosíntesis", definition: "How plants make their own food." },
+  { word: "Gills", translation: "Branquias", definition: "Organs fish use to breathe underwater." },
+  { word: "Womb", translation: "Útero", definition: "The place inside the mother where viviparous babies grow." },
+];

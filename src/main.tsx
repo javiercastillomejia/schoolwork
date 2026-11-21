@@ -1,0 +1,15 @@
+import { StrictMode } from 'react';
+import { createRoot } from 'react-dom/client';
+import { registerSW } from 'virtual:pwa-register';
+import '@fontsource-variable/fredoka/wght.css';
+import '@fontsource-variable/nunito/wght.css';
+import App from './App';
+import './styles.css';
+
+registerSW({ immediate: true });
+
+createRoot(document.getElementById('root') as HTMLElement).render(
+  <StrictMode>
+    <App />
+  </StrictMode>,
+);
