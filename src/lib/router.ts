@@ -36,6 +36,8 @@ export function parseHash(hash: string): Route {
       return arg ? { name: 'topic', ...base, topic: arg } : { name: 'unit', ...base };
     case 'quiz':
       return arg ? { name: 'session', ...base, request: { kind: 'topic', topicId: arg } } : { name: 'unit', ...base };
+    case 'sheet':
+      return arg ? { name: 'session', ...base, request: { kind: 'topic', topicId: arg, all: true } } : { name: 'unit', ...base };
     case 'daily':
       return { name: 'session', ...base, request: { kind: 'daily' } };
     case 'more':
@@ -62,7 +64,7 @@ function requestPath(request: SessionRequest): string {
     case 'more':
       return 'more';
     case 'topic':
-      return `quiz/${encodeURIComponent(request.topicId)}`;
+      return `${request.all ? 'sheet' : 'quiz'}/${encodeURIComponent(request.topicId)}`;
     case 'mistakes':
       return request.questionIds ? `mistakes/${request.questionIds.map(encodeURIComponent).join(',')}` : 'mistakes';
   }

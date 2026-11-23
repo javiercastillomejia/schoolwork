@@ -49,7 +49,7 @@ export function Hub({ store, onOpen, onSettings }: Props) {
               <Mascot mascot={subject.mascot} size={64} />
             </span>
             <div>
-              <h2 id={`subject-${subject.id}`} className="section-title" lang="en">
+              <h2 id={`subject-${subject.id}`} className="section-title" lang={subject.units[0]?.lang}>
                 {subject.name}
               </h2>
               <p className="muted small">
@@ -68,7 +68,7 @@ export function Hub({ store, onOpen, onSettings }: Props) {
                 <li key={unit.id}>
                   <button type="button" className="unit-card" onClick={() => onOpen(subject.id, unit.id)}>
                     <span className="unit-card-top">
-                      <span className="unit-label" lang="en">
+                      <span className="unit-label" lang={unit.lang}>
                         {unit.label}
                       </span>
                       {pending > 0 ? (
@@ -79,7 +79,7 @@ export function Hub({ store, onOpen, onSettings }: Props) {
                         </span>
                       )}
                     </span>
-                    <span className="unit-title" lang="en">
+                    <span className="unit-title" lang={unit.lang}>
                       {unit.title}
                     </span>
                     <span className="unit-subtitle">{unit.subtitle}</span>

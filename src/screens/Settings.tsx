@@ -25,7 +25,7 @@ export function Settings({ store, onChange, onResetUnit, onResetAll, onBack }: P
   }
 
   const units = SUBJECTS.flatMap((subject) =>
-    subject.units.map((unit) => ({ key: unitKey(subject.id, unit.id), label: `${subject.name} · ${unit.label}`, title: unit.title })),
+    subject.units.map((unit) => ({ key: unitKey(subject.id, unit.id), label: `${subject.name} · ${unit.label}`, title: unit.title, lang: unit.lang })),
   );
 
   return (
@@ -85,8 +85,8 @@ export function Settings({ store, onChange, onResetUnit, onResetAll, onBack }: P
         {units.map((unit) => (
           <div key={unit.key} className="reset-row">
             <span>
-              <strong lang="en">{unit.label}</strong>
-              <span className="muted small" lang="en">
+              <strong lang={unit.lang}>{unit.label}</strong>
+              <span className="muted small" lang={unit.lang}>
                 {' '}
                 {unit.title}
               </span>

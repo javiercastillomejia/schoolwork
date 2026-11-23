@@ -1,3 +1,6 @@
+import type { Rng } from '../lib/random';
+import type { Figure, Task } from './task';
+
 /**
  * Forma del contenido de una unidad. Cualquier unidad de cualquier asignatura
  * que tenga temas, fichas de estudio, preguntas de elegir y glosario usa el
@@ -15,6 +18,8 @@ export interface Topic {
   title: string;
   /** Subtítulo en español. */
   subtitle: string;
+  /** Es una hoja de ejercicios: se puede hacer entera y en orden. */
+  sheet?: boolean;
 }
 
 export type ListItem = RichText | { text: RichText; items: ListItem[] };
@@ -37,12 +42,16 @@ export type StudyBlock =
   /** Mapa conceptual en árbol. */
   | { type: 'tree'; root: ListItem }
   /** Pasos en orden (p. ej., respiración en caja). */
-  | { type: 'steps'; title?: RichText; items: RichText[] };
+  | { type: 'steps'; title?: RichText; items: RichText[] }
+  /** Un dibujo (barra, círculo, grupo o recta numérica) con su pie. */
+  | { type: 'figure'; figure: Figure; caption?: RichText };
 
-export interface Question {
+/** Pregunta de elegir con las opciones fijas (Natural Science). */
+export interface ChoiceQuestion {
   /** `<tema>-<nº>`: estable aunque se añadan preguntas al final. */
   id: string;
   topic: string;
+  kind?: 'choice';
   text: string;
   /** La primera es la correcta; la app las baraja. */
   options: [string, ...string[]];
@@ -50,11 +59,34 @@ export interface Question {
   why: string;
 }
 
+/**
+ * Ejercicio que se monta al salir (Matemáticas): puede ser siempre el mismo
+ * (los de la hoja de repaso) o con números nuevos cada vez.
+ */
+export interface TaskQuestion {
+  /** `<tema>-<nombre>`: estable, el progreso guardado depende de él. */
+  id: string;
+  topic: string;
+  kind: 'task';
+  /** Qué se practica, en pocas palabras (para listas y resúmenes). */
+  label: string;
+  /** Con números nuevos cada vez. */
+  generated?: boolean;
+  make: (rng: Rng, options: TaskOptions) => Task;
+}
+
+export interface TaskOptions {
+  /** Opciones en las preguntas de elegir (según la edad). */
+  choices: number;
+}
+
+export type Question = ChoiceQuestion | TaskQuestion;
+
 export interface GlossaryTerm {
   word: string;
-  /** Traducción al español. */
-  translation: string;
-  definition: string;
+  /** Traducción al español (si el contenido está en otro idioma). */
+  translation?: string;
+  definition: RichText;
 }
 
 export interface UnitContent {

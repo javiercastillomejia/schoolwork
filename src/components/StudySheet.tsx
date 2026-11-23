@@ -1,4 +1,5 @@
 import type { ListItem, StudyBlock } from '../core/types';
+import { Figure } from './Figure';
 import { Rich } from './Rich';
 
 /** Columnas de una tabla que son cortas (p. ej., "Cold", "Yes"): se ven como etiquetas. */
@@ -76,7 +77,7 @@ function Block({ block, gaps }: { block: StudyBlock; gaps: boolean }) {
                 </strong>
                 {[...short].map((j) => (
                   <span key={j} className="row-chip">
-                    <span className="row-chip-label">{block.head[j]}:</span> {row[j]}
+                    <span className="row-chip-label">{block.head[j]}:</span> <Rich text={row[j] ?? ''} />
                   </span>
                 ))}
               </div>
@@ -104,11 +105,15 @@ function Block({ block, gaps }: { block: StudyBlock; gaps: boolean }) {
           <ul className="pair-list">
             {block.items.map(([a, b]) => (
               <li key={a} className="pair">
-                <strong>{a}</strong>
+                <strong>
+                  <Rich text={a} />
+                </strong>
                 <span className="pair-arrow" aria-hidden="true">
                   →
                 </span>
-                <span>{b}</span>
+                <span>
+                  <Rich text={b} />
+                </span>
               </li>
             ))}
           </ul>
@@ -124,6 +129,17 @@ function Block({ block, gaps }: { block: StudyBlock; gaps: boolean }) {
             <Rich text={block.text} />
           </span>
         </p>
+      );
+    case 'figure':
+      return (
+        <figure className="study-figure">
+          <Figure figure={block.figure} />
+          {block.caption && (
+            <figcaption>
+              <Rich text={block.caption} />
+            </figcaption>
+          )}
+        </figure>
       );
     case 'note':
       return (
@@ -167,7 +183,9 @@ function Block({ block, gaps }: { block: StudyBlock; gaps: boolean }) {
           <ol className="step-list">
             {block.items.map((item, i) => (
               <li key={i} className="step-chip">
-                <Rich text={item} />
+                <span>
+                  <Rich text={item} />
+                </span>
               </li>
             ))}
           </ol>

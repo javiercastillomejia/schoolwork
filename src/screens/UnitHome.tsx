@@ -57,10 +57,10 @@ export function UnitHome({ subject, unit, progress, settings, studyDays, go, bac
           <Icon name="home" size={22} strokeWidth={2.4} />
         </button>
         <div className="unit-heading">
-          <span className="unit-kicker" lang="en">
+          <span className="unit-kicker" lang={unit.lang}>
             {subject.name} · {unit.label}
           </span>
-          <h1 className="title unit-name" lang="en">
+          <h1 className="title unit-name" lang={unit.lang}>
             {unit.title}
           </h1>
         </div>
@@ -75,7 +75,9 @@ export function UnitHome({ subject, unit, progress, settings, studyDays, go, bac
           {streak > 0 ? plural(streak, 'día seguido', 'días seguidos') : 'Empieza tu racha'}
         </span>
         <span className="pill pill-reward">
-          <Icon name="leaf" size={20} color="var(--leaf)" />
+          <span className="reward-emoji" aria-hidden="true">
+            {mascot.reward.emoji}
+          </span>
           {plural(progress.rewards, mascot.reward.one, mascot.reward.many)}
         </span>
       </div>
@@ -175,7 +177,7 @@ export function UnitHome({ subject, unit, progress, settings, studyDays, go, bac
                   </span>
                   <span className="topic-text">
                     <span className="topic-number">Tema {i + 1}</span>
-                    <span className="topic-title" lang="en">
+                    <span className="topic-title" lang={unit.lang}>
                       {topic.title}
                     </span>
                     <span className="topic-subtitle">{topic.subtitle}</span>

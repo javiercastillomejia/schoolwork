@@ -1,16 +1,24 @@
 import { shuffle, type Rng } from '../lib/random';
-import { EXAM_LENGTH } from './profile';
-import type { Question, UnitContent } from './types';
+import { EXAM_LENGTH, type LearnerProfile } from './profile';
+import { choiceTask, type Task } from './task';
+import type { ChoiceQuestion, Question, UnitContent } from './types';
 
 /** Opciones que se enseñan: la buena y (count − 1) incorrectas al azar, barajadas. */
-export function optionsFor(question: Question, count: number, rng: Rng = Math.random): string[] {
+export function optionsFor(question: ChoiceQuestion, count: number, rng: Rng = Math.random): string[] {
   const [correct, ...wrong] = question.options;
   const picked = shuffle(wrong, rng).slice(0, Math.max(1, count - 1));
   return shuffle([correct, ...picked], rng);
 }
 
-export function correctOption(question: Question): string {
+export function correctOption(question: ChoiceQuestion): string {
   return question.options[0];
+}
+
+/** Monta el ejercicio de una pregunta (las de elegir, con tantas opciones como toque por edad). */
+export function taskFor(question: Question, profile: LearnerProfile, rng: Rng = Math.random): Task {
+  if (question.kind === 'task') return question.make(rng, { choices: profile.options });
+  const [correct, ...wrong] = question.options;
+  return choiceTask(question.text, correct, wrong, question.why, profile.options, rng);
 }
 
 /** Estrellas según el porcentaje de aciertos: 3 (≥ 90 %), 2 (≥ 70 %), 1 (≥ 50 %) o 0. */

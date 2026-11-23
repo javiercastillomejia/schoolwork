@@ -20,7 +20,7 @@ export interface Step {
 export type SessionRequest =
   | { kind: 'daily' }
   | { kind: 'more' }
-  | { kind: 'topic'; topicId: string }
+  | { kind: 'topic'; topicId: string; all?: boolean }
   | { kind: 'mistakes'; questionIds?: string[] };
 
 export const SESSION_LIMITS = {
@@ -151,12 +151,21 @@ export function hardest(unit: UnitContent, cards: Cards): Question[] {
     });
 }
 
-/** Quiz de un tema: `quizLength` preguntas al azar (o todas si hay menos). */
-export function topicSteps(unit: UnitContent, topicId: string, profile: LearnerProfile, rng: Rng = Math.random): Step[] {
+/**
+ * Quiz de un tema: `quizLength` preguntas al azar (o todas si hay menos).
+ * Con `all`, todas y en orden (p. ej., la hoja de repaso entera).
+ */
+export function topicSteps(unit: UnitContent, topicId: string, profile: LearnerProfile, rng: Rng = Math.random, all = false): Step[] {
   const pool = unit.questions.filter((q) => q.topic === topicId);
-  return shuffle(pool, rng)
-    .slice(0, profile.quizLength)
-    .map((q) => ({ questionId: q.id, free: true }));
+  if (all) return pool.map((q) => ({ questionId: q.id, free: true }));
+  const picked = shuffle(pool, rng).slice(0, profile.quizLength);
+  // Si el tema tiene pocos ejercicios pero alguno sale con números nuevos, se repiten esos hasta llenar el quiz.
+  const generated = shuffle(
+    pool.filter((q) => q.kind === 'task' && q.generated),
+    rng,
+  );
+  for (let i = 0; picked.length < profile.quizLength && generated.length > 0; i++) picked.push(generated[i % generated.length]!);
+  return picked.map((q) => ({ questionId: q.id, free: true }));
 }
 
 /** Repaso de fallos: los indicados o, si no, los que más cuestan. */
@@ -184,7 +193,7 @@ export function stepsFor(
     case 'more':
       return planMore(unit, cards, today, profile, startedTopics, rng).steps;
     case 'topic':
-      return topicSteps(unit, request.topicId, profile, rng);
+      return topicSteps(unit, request.topicId, profile, rng, request.all);
     case 'mistakes':
       return mistakeSteps(unit, cards, request.questionIds, rng);
   }

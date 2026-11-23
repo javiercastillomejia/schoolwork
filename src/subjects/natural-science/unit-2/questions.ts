@@ -1,10 +1,10 @@
-import type { Question } from '../../../core/types';
+import type { ChoiceQuestion } from '../../../core/types';
 
 /**
  * Las 114 preguntas del documento de la unidad, sin cambios (ver CONTENT.md).
  * En cada pregunta, la primera opción es la correcta; la app las baraja.
  */
-export const QUESTIONS: Question[] = [
+export const QUESTIONS: ChoiceQuestion[] = [
   {
     id: "char-01",
     topic: "char",

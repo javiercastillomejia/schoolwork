@@ -1,14 +1,14 @@
 import { useEffect, useRef, useState } from 'react';
 import { pick } from '../lib/random';
 import type { MascotInfo } from '../mascots/types';
-import { Icon } from './Icon';
 import { Mascot } from './Mascot';
+import { Rich } from './Rich';
 
 interface Props {
   correct: boolean;
-  /** Respuesta buena. */
+  /** Respuesta buena (se enseña si ha fallado). */
   answer: string;
-  /** Explicación de la pregunta. */
+  /** Explicación o solución paso a paso. */
   why: string;
   name: string;
   mascot: MascotInfo;
@@ -27,6 +27,7 @@ const OOPS = ['¡Ups, {n}!', '¡Casi, {n}!', 'No pasa nada, {n}'];
 export function Feedback({ correct, answer, why, name, mascot, lang, earned, willRetry, onContinue }: Props) {
   const button = useRef<HTMLButtonElement>(null);
   const [title] = useState(() => pick(correct ? PRAISE : OOPS).replace('{n}', name));
+  const english = lang.startsWith('en');
 
   useEffect(() => {
     button.current?.focus({ preventScroll: true });
@@ -41,19 +42,22 @@ export function Feedback({ correct, answer, why, name, mascot, lang, earned, wil
           <p className="sheet-title">{title}</p>
           {!correct && (
             <p className="sheet-answer">
-              La buena es: <strong lang={lang}>{answer}</strong>
+              {english ? 'La buena es:' : 'Solución:'}{' '}
+              <strong lang={lang}>
+                <Rich text={answer} />
+              </strong>
             </p>
           )}
           {earned && (
             <span className="pill pill-reward">
-              <Icon name="leaf" size={16} color="var(--leaf)" /> +1 {mascot.reward.one}
+              <span aria-hidden="true">{mascot.reward.emoji}</span> +1 {mascot.reward.one}
             </span>
           )}
         </div>
       </div>
 
       <p className="why" lang={lang}>
-        <span className="why-label">Why?</span> {why}
+        <span className="why-label">{english ? 'Why?' : '¿Por qué?'}</span> <Rich text={why} />
       </p>
 
       {willRetry && <p className="sheet-retry">La repetimos dentro de un ratito para que te salga a la primera.</p>}

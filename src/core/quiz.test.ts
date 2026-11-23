@@ -1,10 +1,10 @@
 import { describe, expect, it } from 'vitest';
 import { seededRng } from '../lib/random';
-import { unit2 } from '../subjects/natural-science/unit-2';
+import { QUESTIONS, unit2 } from '../subjects/natural-science/unit-2';
 import { examQuestions, formatGrade, gradeLabel, gradeOf, optionsFor, percentOf, starsFor } from './quiz';
 
 describe('preguntas', () => {
-  const q = unit2.questions[0]!;
+  const q = QUESTIONS[0]!;
 
   it('las opciones incluyen siempre la correcta y salen barajadas', () => {
     const seen = new Set<number>();

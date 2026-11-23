@@ -1,3 +1,4 @@
+import { matematicas } from './matematicas';
 import { naturalScience } from './natural-science';
 import type { Subject } from './types';
 
@@ -5,7 +6,7 @@ import type { Subject } from './types';
  * Asignaturas de la app, en el orden en que salen en el inicio.
  * Para añadir una asignatura o una unidad, mira el README.
  */
-export const SUBJECTS: Subject[] = [naturalScience];
+export const SUBJECTS: Subject[] = [naturalScience, matematicas];
 
 export function findSubject(id: string): Subject | undefined {
   return SUBJECTS.find((s) => s.id === id);

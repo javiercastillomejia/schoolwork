@@ -10,6 +10,7 @@ describe('rutas', () => {
     { name: 'unit', ...base },
     { name: 'topic', ...base, topic: 'char' },
     { name: 'session', ...base, request: { kind: 'topic', topicId: 'nut' } },
+    { name: 'session', ...base, request: { kind: 'topic', topicId: 'repaso', all: true } },
     { name: 'session', ...base, request: { kind: 'daily' } },
     { name: 'session', ...base, request: { kind: 'more' } },
     { name: 'session', ...base, request: { kind: 'mistakes' } },

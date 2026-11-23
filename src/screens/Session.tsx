@@ -2,15 +2,16 @@ import { useState } from 'react';
 import { Confetti } from '../components/Confetti';
 import { Icon } from '../components/Icon';
 import { Mascot } from '../components/Mascot';
-import { QuestionCard } from '../components/QuestionCard';
 import { SessionBar } from '../components/SessionBar';
+import { Rich } from '../components/Rich';
 import { Stars } from '../components/Stars';
+import { TaskStep } from '../components/TaskStep';
 import { profileForAge } from '../core/profile';
-import { correctOption, percentOf, starsFor } from '../core/quiz';
+import { percentOf, starsFor, taskFor } from '../core/quiz';
 import { scheduleRetry, SESSION_LIMITS, stepsFor, type SessionRequest, type Step } from '../core/session';
 import { applyAnswer, applyFreeAnswer, cardOf, dayNumber } from '../core/srs';
 import { currentStreak } from '../core/stats';
-import type { Question } from '../core/types';
+import { answerText, type Task } from '../core/task';
 import { plural } from '../lib/text';
 import { markStudied } from '../storage/store';
 import type { UnitScreenProps } from './types';
@@ -19,6 +20,9 @@ interface Result {
   questionId: string;
   correct: boolean;
   retry: boolean;
+  /** Enunciado y solución, para la lista de fallos. */
+  text: string;
+  answer: string;
 }
 
 /** Una sesión de preguntas: reto del día, quiz de un tema o repaso de fallos. */
@@ -31,12 +35,22 @@ export function Session(props: UnitScreenProps & { request: SessionRequest }) {
   const [retries, setRetries] = useState<Record<string, number>>({});
   const [results, setResults] = useState<Result[]>([]);
   const [finished, setFinished] = useState(false);
+  // Cada paso monta su ejercicio una sola vez (los de mates salen con números nuevos).
+  const [tasks] = useState(() => new Map<number, Task>());
 
   const step = steps[index];
   const question = step ? unit.questions.find((q) => q.id === step.questionId) : undefined;
+  let task: Task | undefined;
+  if (question) {
+    task = tasks.get(index);
+    if (!task) {
+      task = taskFor(question, profile);
+      tasks.set(index, task);
+    }
+  }
 
   /** Guarda la respuesta y devuelve si la pregunta se repetirá en esta sesión. */
-  function handleAnswer(current: Step, correct: boolean, usedHint: boolean): boolean {
+  function handleAnswer(current: Step, currentTask: Task, correct: boolean, usedHint: boolean): boolean {
     const earns = correct && !current.retry && !usedHint;
     const apply = current.free ? applyFreeAnswer : applyAnswer;
     updateUnit((u) => ({
@@ -45,8 +59,12 @@ export function Session(props: UnitScreenProps & { request: SessionRequest }) {
       rewards: u.rewards + (earns ? 1 : 0),
     }));
     update((s) => markStudied(s, today));
-    setResults((r) => [...r, { questionId: current.questionId, correct, retry: Boolean(current.retry) }]);
-    if (correct) return false;
+    setResults((r) => [
+      ...r,
+      { questionId: current.questionId, correct, retry: Boolean(current.retry), text: currentTask.text, answer: answerText(currentTask) },
+    ]);
+    // En la hoja entera no se repite nada: los fallos se practican al final.
+    if (correct || (request.kind === 'topic' && request.all)) return false;
     const done = retries[current.questionId] ?? 0;
     setRetries((r) => ({ ...r, [current.questionId]: done + 1 }));
     setSteps((s) => scheduleRetry(s, index, current, done));
@@ -66,25 +84,24 @@ export function Session(props: UnitScreenProps & { request: SessionRequest }) {
     setIndex((i) => i + 1);
   }
 
-  if (!step || !question || finished) {
+  if (!step || !question || !task || finished) {
     return <Summary {...props} results={results} today={today} />;
   }
 
   return (
     <main className="screen session">
       <SessionBar index={index} total={steps.length} onExit={back} />
-      <QuestionCard
+      <TaskStep
         key={index}
-        question={question}
+        task={task}
         topic={unit.topics.find((t) => t.id === question.topic)}
-        optionCount={profile.options}
         hints={profile.hints}
         name={settings.name}
         mascot={subject.mascot}
         lang={unit.lang}
         autoSpeak={settings.autoSpeak}
         retry={Boolean(step.retry)}
-        onAnswer={(correct, usedHint) => handleAnswer(step, correct, usedHint)}
+        onAnswer={(correct, usedHint) => handleAnswer(step, task, correct, usedHint)}
         onContinue={next}
       />
     </main>
@@ -114,7 +131,8 @@ function Summary({
   const percent = percentOf(right, first.length);
   const stars = starsFor(percent);
   const missedIds = [...new Set(results.filter((r) => !r.correct).map((r) => r.questionId))];
-  const missed = missedIds.map((id) => unit.questions.find((q) => q.id === id)).filter((q): q is Question => q !== undefined);
+  // De cada fallada, la última vez que salió (con sus números).
+  const missed = missedIds.map((id) => [...results].reverse().find((r) => r.questionId === id)!);
   const streak = currentStreak(studyDays, today);
   const keepGoing = request.kind === 'daily' || request.kind === 'more';
   const topicId = request.kind === 'topic' ? request.topicId : undefined;
@@ -147,13 +165,15 @@ function Summary({
       <Stars count={stars} size={52} />
       {topic && (
         <p className="muted small">
-          <span lang="en">{topic.title}</span> · tu mejor nota: {Math.max(progress.best[topic.id] ?? 0, percent)} %
+          <span lang={unit.lang}>{topic.title}</span> · tu mejor nota: {Math.max(progress.best[topic.id] ?? 0, percent)} %
         </p>
       )}
 
       <div className="summary-tiles">
         <span className="summary-tile tint-b">
-          <Icon name="leaf" size={24} color="var(--leaf)" />
+          <span className="reward-emoji reward-big" aria-hidden="true">
+            {mascot.reward.emoji}
+          </span>
           <strong>+{earned}</strong>
           {earned === 1 ? mascot.reward.one : mascot.reward.many}
         </span>
@@ -163,7 +183,9 @@ function Summary({
           {streak === 1 ? 'día seguido' : 'días seguidos'}
         </span>
         <span className="summary-tile tint-a">
-          <Icon name="leaf" size={24} color="var(--leaf)" />
+          <span className="reward-emoji reward-big" aria-hidden="true">
+            {mascot.reward.emoji}
+          </span>
           <strong>{progress.rewards}</strong>
           en total
         </span>
@@ -175,10 +197,14 @@ function Summary({
             {keepGoing ? 'Mañana repasamos' : 'Para repasar'}
           </h2>
           <ul lang={unit.lang}>
-            {missed.map((q) => (
-              <li key={q.id}>
-                <span className="missed-q">{q.text}</span>
-                <strong className="missed-a">{correctOption(q)}</strong>
+            {missed.map((r) => (
+              <li key={r.questionId}>
+                <span className="missed-q">
+                  <Rich text={r.text} />
+                </span>
+                <strong className="missed-a">
+                  <Rich text={r.answer} />
+                </strong>
               </li>
             ))}
           </ul>

@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import markdown from './CONTENT.md?raw';
-import { unit2 } from '.';
+import { QUESTIONS, unit2 } from '.';
 
 /** Filas de la tabla que hay justo después de un título de CONTENT.md. */
 function tableAfter(title: string): string[][] {
@@ -49,8 +49,9 @@ describe('Natural Science · Unit 2', () => {
     const rows = tableAfter('## Banco de preguntas');
     expect(rows).toHaveLength(114);
     expect(unit2.questions).toHaveLength(114);
+    expect(unit2.questions).toBe(QUESTIONS);
     rows.forEach(([topic, text, correct, wrong, why], i) => {
-      const q = unit2.questions[i]!;
+      const q = QUESTIONS[i]!;
       const single = correct!.endsWith(' (una sola opción)');
       const answer = single ? correct!.replace(' (una sola opción)', '') : correct;
       const distractors = wrong!.split(single ? ' · ' : ' / ');
@@ -65,7 +66,7 @@ describe('Natural Science · Unit 2', () => {
 
   it('cada pregunta tiene exactamente una respuesta correcta y opciones distintas', () => {
     const ids = new Set<string>();
-    for (const q of unit2.questions) {
+    for (const q of QUESTIONS) {
       expect(ids.has(q.id), q.id).toBe(false);
       ids.add(q.id);
       expect(q.id.startsWith(`${q.topic}-`)).toBe(true);

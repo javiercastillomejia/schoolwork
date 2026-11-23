@@ -21,11 +21,15 @@ export function TopicScreen({ unit, progress, settings, go, back, at, updateUnit
   const stopRef = useRef<() => void>(() => {});
   const sheet = useRef<HTMLDivElement>(null);
   const best = progress.best[topicId];
-  const count = Math.min(profileForAge(settings.age).quizLength, unit.questions.filter((q) => q.topic === topicId).length);
+  const pool = unit.questions.filter((q) => q.topic === topicId);
+  const generated = pool.some((q) => q.kind === 'task' && q.generated);
+  const count = generated ? profileForAge(settings.age).quizLength : Math.min(profileForAge(settings.age).quizLength, pool.length);
+  const sheetCount = new Set(pool.map((q) => q.id.replace(/[a-z]$/, ''))).size;
+  const english = unit.lang.startsWith('en');
 
   const segments = useMemo(
-    () => blocks.flatMap((block, i) => blockSpeech(block).map((text) => ({ block: i, text }))),
-    [blocks],
+    () => blocks.flatMap((block, i) => blockSpeech(block, unit.lang).map((text) => ({ block: i, text }))),
+    [blocks, unit.lang],
   );
 
   // Abrir la ficha cuenta como "tema empezado" (sus preguntas salen antes en el reto).
@@ -97,7 +101,7 @@ export function TopicScreen({ unit, progress, settings, go, back, at, updateUnit
         <span className="topic-hero-emoji" aria-hidden="true">
           {topic.emoji}
         </span>
-        <h1 className="title" lang="en">
+        <h1 className="title" lang={unit.lang}>
           {topic.title}
         </h1>
         <p className="muted">{topic.subtitle}</p>
@@ -134,12 +138,25 @@ export function TopicScreen({ unit, progress, settings, go, back, at, updateUnit
           className="btn btn-primary btn-block btn-big"
           onClick={() => go({ name: 'session', ...at, request: { kind: 'topic', topicId } })}
         >
-          <span lang="en">Practise this topic</span> <Icon name="arrowRight" size={22} strokeWidth={3} />
+          <span lang={unit.lang}>{english ? 'Practise this topic' : topic.sheet ? 'Practicar 10 al azar' : 'Practicar este tema'}</span>{' '}
+          <Icon name="arrowRight" size={22} strokeWidth={3} />
         </button>
-        <p className="muted small mission-foot">{count} preguntas con la explicación de cada respuesta</p>
+        <p className="muted small mission-foot">
+          {count} {english ? 'preguntas' : 'ejercicios'} con la explicación de cada respuesta
+          {generated ? ' (los números cambian cada vez)' : ''}
+        </p>
+        {topic.sheet && (
+          <button
+            type="button"
+            className="btn btn-primary btn-block sheet-btn"
+            onClick={() => go({ name: 'session', ...at, request: { kind: 'topic', topicId, all: true } })}
+          >
+            <Icon name="exam" size={22} strokeWidth={2.4} /> Hacer la hoja entera ({sheetCount} ejercicios)
+          </button>
+        )}
         {next && (
           <button type="button" className="btn btn-secondary btn-block" onClick={() => go({ name: 'topic', ...at, topic: next.id }, { replace: true })}>
-            Siguiente tema: <span lang="en">{next.title}</span>
+            Siguiente tema: <span lang={unit.lang}>{next.title}</span>
           </button>
         )}
       </div>

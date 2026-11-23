@@ -3,6 +3,8 @@ import { Icon } from '../components/Icon';
 import { SpeakButton } from '../components/SpeakButton';
 import { shuffle } from '../lib/random';
 import { speak } from '../lib/speech';
+import { plain } from '../lib/text';
+import { Rich } from '../components/Rich';
 import type { UnitScreenProps } from './types';
 
 /** Fichas del glosario: palabra y traducción delante, definición detrás. */
@@ -23,7 +25,7 @@ export function Cards({ unit, settings, back }: UnitScreenProps) {
   const flip = useCallback(() => setFlipped((f) => !f), []);
 
   useEffect(() => {
-    if (settings.autoSpeak) speak(flipped ? term.definition : term.word, unit.lang);
+    if (settings.autoSpeak) speak(flipped ? plain(term.definition, unit.lang) : term.word, unit.lang);
   }, [term, flipped, settings.autoSpeak, unit.lang]);
 
   useEffect(() => {
@@ -73,7 +75,11 @@ export function Cards({ unit, settings, back }: UnitScreenProps) {
           className={`flip-card ${flipped ? 'is-flipped' : ''}`}
           role="button"
           tabIndex={0}
-          aria-label={flipped ? `${term.word}: ${term.definition}. Toca para dar la vuelta.` : `${term.word}, ${term.translation}. Toca para ver la definición.`}
+          aria-label={
+            flipped
+              ? `${term.word}: ${plain(term.definition, unit.lang)}. Toca para dar la vuelta.`
+              : `${term.word}${term.translation ? `, ${term.translation}` : ''}. Toca para ver la definición.`
+          }
           onClick={flip}
           onKeyDown={(event) => {
             if (event.key === ' ' || event.key === 'Enter') {
@@ -84,11 +90,11 @@ export function Cards({ unit, settings, back }: UnitScreenProps) {
           }}
         >
           <div className="flip-face flip-front" aria-hidden={flipped}>
-            <span className="form-label">Word</span>
+            <span className="form-label">{unit.lang.startsWith('en') ? 'Word' : 'Palabra'}</span>
             <p className="flip-word" lang={unit.lang}>
               {term.word}
             </p>
-            <p className="flip-translation">{term.translation}</p>
+            {term.translation && <p className="flip-translation">{term.translation}</p>}
             <span className="flip-hint">
               <Icon name="flip" size={18} strokeWidth={2.4} /> Toca para ver la definición
             </span>
@@ -98,7 +104,7 @@ export function Cards({ unit, settings, back }: UnitScreenProps) {
               {term.word}
             </span>
             <p className="flip-definition" lang={unit.lang}>
-              {term.definition}
+              <Rich text={term.definition} />
             </p>
             <span className="flip-hint">
               <Icon name="flip" size={18} strokeWidth={2.4} /> Toca para volver
@@ -108,7 +114,7 @@ export function Cards({ unit, settings, back }: UnitScreenProps) {
       </div>
 
       <div className="cards-speak">
-        <SpeakButton text={flipped ? term.definition : term.word} label={flipped ? 'la definición' : 'la palabra'} lang={unit.lang} />
+        <SpeakButton text={flipped ? plain(term.definition, unit.lang) : term.word} label={flipped ? 'la definición' : 'la palabra'} lang={unit.lang} />
       </div>
 
       <div className="cards-nav">
