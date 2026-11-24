@@ -62,6 +62,8 @@
   --subject-nature-tile: #e9f5e1;
   --subject-ocean: #0a7fa6;
   --subject-ocean-tile: #e2f3fa;
+  --subject-violet: #6c4cf5;
+  --subject-violet-tile: #ece7ff;
   --font-display: 'Fredoka Variable', 'Fredoka', ui-rounded, 'SF Pro Rounded', system-ui, sans-serif;
   --font-body: 'Nunito Variable', 'Nunito', ui-rounded, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
   --gutter: max(16px, env(safe-area-inset-left), env(safe-area-inset-right));
@@ -81,6 +83,11 @@
   --primary-deep: #1f6b2f;
   --primary-text: #1f6b2f;
   --ring: #bfe0b2;
+}
+
+:root[data-theme='violet'] {
+  --bg: #f4f1ff;
+  --dot: #f4f1ff;
 }
 
 :root[data-theme='ocean'] {
@@ -151,6 +158,13 @@
     --subject-nature-tile: #1f3727;
     --subject-ocean: #2aa7d1;
     --subject-ocean-tile: #1b3646;
+    --subject-violet: #8b73ff;
+    --subject-violet-tile: #2e2852;
+  }
+
+  :root[data-theme='violet'] {
+    --bg: #17142b;
+    --dot: #17142b;
   }
 
   :root[data-theme='ocean'] {
@@ -814,6 +828,11 @@ button {
 .subject-ocean {
   --subject-color: var(--subject-ocean);
   --subject-tile: var(--subject-ocean-tile);
+}
+
+.subject-violet {
+  --subject-color: var(--subject-violet);
+  --subject-tile: var(--subject-violet-tile);
 }
 
 .unit-foot {
@@ -2618,4 +2637,11 @@ button {
 
 .reward-big {
   font-size: 1.5rem;
+}
+
+.loading {
+  padding: 40px 16px;
+  text-align: center;
+  color: var(--muted);
+  font-weight: 800;
 }

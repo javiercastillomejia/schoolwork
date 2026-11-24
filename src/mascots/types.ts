@@ -2,7 +2,7 @@ export type MascotMood = 'normal' | 'happy' | 'oops' | 'party';
 
 export interface MascotInfo {
   /** Dibujo (ver components/Mascot.tsx). */
-  art: 'koala' | 'seal';
+  art: 'koala' | 'seal' | 'chameleon';
   /** Nombre con el que se presenta ("Koa"). */
   name: string;
   /** "el koala". */

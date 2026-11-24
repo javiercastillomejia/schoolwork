@@ -6,7 +6,8 @@ import { dayNumber } from '../core/srs';
 import { currentStreak, unitSummary } from '../core/stats';
 import { plural } from '../lib/text';
 import { unitKey, unitOf, type Store } from '../storage/store';
-import { SUBJECTS } from '../subjects';
+import { allStudyDays, SUBJECTS } from '../subjects';
+import { isCustom } from '../subjects/types';
 
 interface Props {
   store: Store;
@@ -18,7 +19,8 @@ interface Props {
 export function Hub({ store, onOpen, onSettings }: Props) {
   const { settings } = store;
   const today = dayNumber();
-  const streak = currentStreak(store.studyDays, today);
+  // La racha es común: cuenta también los días de las unidades con app propia (los verbos).
+  const streak = currentStreak(allStudyDays(store), today);
   const profile = profileForAge(settings.age);
 
   return (
@@ -60,10 +62,20 @@ export function Hub({ store, onOpen, onSettings }: Props) {
 
           <ul className="unit-list">
             {subject.units.map((unit) => {
-              const progress = unitOf(store, unitKey(subject.id, unit.id));
-              const summary = unitSummary(unit, progress.cards, progress.best);
-              const plan = planDaily(unit, progress.cards, today, profile, progress.read);
-              const pending = plan.reviewCount + plan.newCount;
+              let percent: number;
+              let pending: number | null;
+              let detail: string;
+              let word: [string, string] = ['pregunta', 'preguntas'];
+              if (isCustom(unit)) {
+                ({ percent, pending, detail, pendingWord: word } = unit.summary(settings.age));
+              } else {
+                const progress = unitOf(store, unitKey(subject.id, unit.id));
+                const summary = unitSummary(unit, progress.cards, progress.best);
+                const plan = planDaily(unit, progress.cards, today, profile, progress.read);
+                percent = summary.percent;
+                pending = plan.reviewCount + plan.newCount;
+                detail = `${summary.topicsDone} de ${unit.topics.length} temas`;
+              }
               return (
                 <li key={unit.id}>
                   <button type="button" className="unit-card" onClick={() => onOpen(subject.id, unit.id)}>
@@ -71,8 +83,10 @@ export function Hub({ store, onOpen, onSettings }: Props) {
                       <span className="unit-label" lang={unit.lang}>
                         {unit.label}
                       </span>
-                      {pending > 0 ? (
-                        <span className="unit-pending">Reto de hoy: {plural(pending, 'pregunta', 'preguntas')}</span>
+                      {pending === null ? (
+                        <span className="unit-pending">¡Empieza!</span>
+                      ) : pending > 0 ? (
+                        <span className="unit-pending">Reto de hoy: {plural(pending, word[0], word[1])}</span>
                       ) : (
                         <span className="unit-pending is-done">
                           <Icon name="check" size={14} strokeWidth={3.5} /> Reto cumplido
@@ -84,13 +98,11 @@ export function Hub({ store, onOpen, onSettings }: Props) {
                     </span>
                     <span className="unit-subtitle">{unit.subtitle}</span>
                     <span className="meter" aria-hidden="true">
-                      <span style={{ width: `${Math.max(summary.percent, 2)}%` }} />
+                      <span style={{ width: `${Math.max(percent, 2)}%` }} />
                     </span>
                     <span className="unit-foot">
-                      <span>{summary.percent} % aprendido</span>
-                      <span>
-                        {summary.topicsDone} de {unit.topics.length} temas
-                      </span>
+                      <span>{percent} % aprendido</span>
+                      <span>{detail}</span>
                       <Icon name="arrowRight" size={20} strokeWidth={3} />
                     </span>
                   </button>

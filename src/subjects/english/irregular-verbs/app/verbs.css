@@ -1,0 +1,2149 @@
+/*
+ * Estilos de la app de verbos irregulares, limitados a su contenedor
+ * (.verbs-app) para no mezclarse con los del resto de Schoolwork.
+ * Son los de la app original con todos los selectores dentro de .verbs-app.
+ */
+.verbs-app {
+  min-height: 100dvh;
+  background-color: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 17px;
+  font-weight: 600;
+  line-height: 1.45;
+}
+
+.verbs-app {
+  color-scheme: light;
+  --bg: #f4f1ff;
+  --surface: #ffffff;
+  --surface-2: #ece7ff;
+  --line: #e2dbff;
+  --text: #24204a;
+  --muted: #5f5a84;
+  --muted-2: #4a456e;
+  --primary: #6c4cf5;
+  --primary-deep: #4b2fd1;
+  --primary-text: #4b2fd1;
+  --on-primary: #ffffff;
+  --ring: #d5ccff;
+  --ok: #1e9e62;
+  --ok-deep: #12754a;
+  --ok-soft: #ddf6e9;
+  --ok-text: #12754a;
+  --on-ok: #ffffff;
+  --oops: #f08a24;
+  --oops-btn: #d9650b;
+  --oops-deep: #a94f00;
+  --oops-soft: #ffebd6;
+  --oops-text: #9a4700;
+  --oops-tile: #ffd2a8;
+  --on-oops: #ffffff;
+  --star: #ffb800;
+  --star-empty: #e7dfbf;
+  --sun: #ffc531;
+  --sun-deep: #e0a400;
+  --flame: #f08a24;
+  --pill-star: #fff1c7;
+  --pill-star-text: #6e4e00;
+  --pill-flame: #ffe6d1;
+  --pill-flame-text: #9a4700;
+  --locked: #e6e1f7;
+  --locked-text: #6f6a90;
+  --unseen-dot: #cfc9e4;
+  --note: #fff1c7;
+  --tint-1: #ffe1ea;
+  --tint-2: #ddf0ff;
+  --tint-3: #ddf6e9;
+  --tint-4: #fff1c7;
+  --tint-5: #ece7ff;
+  --tint-flame: #ffe6d1;
+  --font-display: 'Fredoka Variable', 'Fredoka', ui-rounded, 'SF Pro Rounded', system-ui, sans-serif;
+  --font-body: 'Nunito Variable', 'Nunito', ui-rounded, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --gutter: max(16px, env(safe-area-inset-left), env(safe-area-inset-right));
+  --pad-top: max(20px, env(safe-area-inset-top));
+  --pad-bottom: max(20px, env(safe-area-inset-bottom));
+}
+
+@media (prefers-color-scheme: dark) {
+  .verbs-app {
+    color-scheme: dark;
+    --bg: #17142b;
+    --surface: #221e3d;
+    --surface-2: #2e2852;
+    --line: #3a3366;
+    --text: #f1eeff;
+    --muted: #b7b1da;
+    --muted-2: #cfcaee;
+    --primary: #7c62ff;
+    --primary-deep: #4f34d6;
+    --primary-text: #b9a9ff;
+    --ring: #463b88;
+    --ok: #3fcb86;
+    --ok-deep: #1e9e62;
+    --ok-soft: #173b2b;
+    --ok-text: #7be3ae;
+    --on-ok: #0b2418;
+    --oops: #ffa24d;
+    --oops-btn: #f08a24;
+    --oops-deep: #a94f00;
+    --oops-soft: #3f2714;
+    --oops-text: #ffc08a;
+    --oops-tile: #7a4416;
+    --on-oops: #2b1400;
+    --star-empty: #4a4466;
+    --pill-star: #3b3218;
+    --pill-star-text: #ffd86b;
+    --pill-flame: #3f2714;
+    --pill-flame-text: #ffc08a;
+    --locked: #2e2a48;
+    --locked-text: #a9a3cc;
+    --unseen-dot: #4a4466;
+    --note: #3b3218;
+    --tint-1: #3a2433;
+    --tint-2: #1f3247;
+    --tint-3: #173b2b;
+    --tint-4: #3b3218;
+    --tint-5: #2e2852;
+    --tint-flame: #3f2714;
+  }
+}
+
+.verbs-app * {
+  box-sizing: border-box;
+}
+
+.verbs-app {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 17px;
+  font-weight: 600;
+  line-height: 1.45;
+  -webkit-font-smoothing: antialiased;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.verbs-app h1, .verbs-app h2, .verbs-app p {
+  margin: 0;
+}
+
+.verbs-app button, .verbs-app input {
+  font: inherit;
+  color: inherit;
+}
+
+.verbs-app button {
+  cursor: pointer;
+  touch-action: manipulation;
+}
+
+.verbs-app :focus-visible {
+  outline: 3px solid var(--primary);
+  outline-offset: 3px;
+}
+
+.verbs-app .muted {
+  color: var(--muted);
+}
+
+.verbs-app .small {
+  font-size: 0.88rem;
+}
+
+.verbs-app .app {
+  max-width: 600px;
+  margin: 0 auto;
+  min-height: 100dvh;
+  padding: var(--pad-top) var(--gutter) var(--pad-bottom);
+}
+
+.verbs-app .screen {
+  min-height: calc(100dvh - var(--pad-top) - var(--pad-bottom));
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.verbs-app .card {
+  background: var(--surface);
+  border-radius: 26px;
+  box-shadow: 0 6px 0 var(--line);
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.verbs-app .banner {
+  background: var(--note);
+  border-radius: 14px;
+  padding: 10px 14px;
+  margin-bottom: 12px;
+  font-size: 0.9rem;
+}
+
+.verbs-app .title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.75rem;
+  line-height: 1.12;
+}
+
+.verbs-app .title-big {
+  font-size: 2.2rem;
+}
+
+.verbs-app .section-title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.3rem;
+  line-height: 1.2;
+}
+
+.verbs-app .topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.verbs-app .topbar-spacer {
+  width: 44px;
+  flex: none;
+}
+
+.verbs-app .btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  border: 0;
+  border-radius: 20px;
+  padding: 12px 20px;
+  min-height: 58px;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.3rem;
+  transition:
+  transform 0.08s ease,
+  box-shadow 0.08s ease;
+}
+
+.verbs-app .btn:active:not(:disabled) {
+  transform: translateY(4px);
+}
+
+.verbs-app .btn:disabled {
+  opacity: 0.45;
+  cursor: default;
+}
+
+.verbs-app .btn-block {
+  width: 100%;
+}
+
+.verbs-app .btn-big {
+  min-height: 62px;
+}
+
+.verbs-app .btn-bottom {
+  margin-top: auto;
+}
+
+.verbs-app .btn-primary {
+  background: var(--primary);
+  color: var(--on-primary);
+  box-shadow: 0 6px 0 var(--primary-deep);
+}
+
+.verbs-app .btn-primary:active:not(:disabled) {
+  box-shadow: 0 2px 0 var(--primary-deep);
+}
+
+.verbs-app .btn-ok {
+  background: var(--ok);
+  color: var(--on-ok);
+  box-shadow: 0 6px 0 var(--ok-deep);
+}
+
+.verbs-app .btn-oops {
+  background: var(--oops-btn);
+  color: var(--on-oops);
+  box-shadow: 0 6px 0 var(--oops-deep);
+}
+
+.verbs-app .btn-secondary {
+  background: var(--surface);
+  color: var(--primary-text);
+  box-shadow: 0 6px 0 var(--line);
+}
+
+.verbs-app .btn-danger {
+  align-self: flex-start;
+  min-height: 48px;
+  font-size: 1.05rem;
+  background: var(--oops-soft);
+  color: var(--oops-text);
+  box-shadow: none;
+}
+
+.verbs-app .icon-btn {
+  width: 44px;
+  height: 44px;
+  flex: none;
+  border-radius: 50%;
+  border: 0;
+  background: var(--surface);
+  box-shadow: 0 3px 0 var(--line);
+  display: grid;
+  place-items: center;
+}
+
+.verbs-app .chip {
+  border: 0;
+  background: var(--surface-2);
+  color: var(--primary-text);
+  border-radius: 999px;
+  padding: 6px 14px;
+  min-height: 36px;
+  font-weight: 800;
+  font-size: 0.88rem;
+}
+
+.verbs-app .speak {
+  width: 44px;
+  height: 44px;
+  flex: none;
+  border-radius: 50%;
+  border: 0;
+  background: var(--surface-2);
+  color: var(--primary-text);
+  display: grid;
+  place-items: center;
+}
+
+.verbs-app .pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.verbs-app .pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 40px;
+  padding: 0 14px;
+  border-radius: 999px;
+  font-weight: 800;
+  font-size: 0.9rem;
+}
+
+.verbs-app .pill-star {
+  background: var(--pill-star);
+  color: var(--pill-star-text);
+}
+
+.verbs-app .pill-flame {
+  background: var(--pill-flame);
+  color: var(--pill-flame-text);
+}
+
+.verbs-app .note {
+  background: var(--note);
+  border-radius: 12px;
+  padding: 8px 12px;
+  font-size: 0.92rem;
+  font-weight: 700;
+}
+
+.verbs-app .tint-1 {
+  background: var(--tint-1);
+}
+
+.verbs-app .tint-2 {
+  background: var(--tint-2);
+}
+
+.verbs-app .tint-3 {
+  background: var(--tint-3);
+}
+
+.verbs-app .tint-4 {
+  background: var(--tint-4);
+}
+
+.verbs-app .tint-5 {
+  background: var(--tint-5);
+}
+
+.verbs-app .tint-flame {
+  background: var(--tint-flame);
+}
+
+.verbs-app .baco {
+  flex: none;
+  display: block;
+}
+
+.verbs-app .baco-says {
+  display: flex;
+  align-items: flex-end;
+  gap: 8px;
+}
+
+.verbs-app .bubble {
+  position: relative;
+  flex: 1;
+  background: var(--surface);
+  border-radius: 20px;
+  padding: 12px 14px;
+  margin-bottom: 14px;
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1.35;
+  box-shadow: 0 4px 0 var(--line);
+}
+
+.verbs-app .bubble::before {
+  content: '';
+  position: absolute;
+  left: -7px;
+  bottom: 16px;
+  width: 14px;
+  height: 14px;
+  background: var(--surface);
+  transform: rotate(45deg);
+}
+
+.verbs-app .baco-name {
+  color: var(--ok-text);
+}
+
+.verbs-app .field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.verbs-app .field-label {
+  font-weight: 800;
+  font-size: 1rem;
+}
+
+.verbs-app .text-input {
+  width: 100%;
+  min-height: 58px;
+  border-radius: 18px;
+  border: 3px solid var(--line);
+  background: var(--surface);
+  padding: 0 18px;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1.4rem;
+}
+
+.verbs-app .text-input:focus {
+  outline: none;
+  border-color: var(--primary);
+}
+
+.verbs-app .age-picker {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.verbs-app .age-option {
+  min-height: 52px;
+  border-radius: 16px;
+  border: 3px solid var(--line);
+  background: var(--surface);
+  box-shadow: 0 4px 0 var(--line);
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.3rem;
+  padding: 0;
+}
+
+.verbs-app .age-option.is-selected {
+  border-color: var(--primary);
+  background: var(--primary);
+  color: var(--on-primary);
+  box-shadow: 0 4px 0 var(--primary-deep);
+}
+
+.verbs-app .week-picker {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.verbs-app .week-option {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+  min-height: 86px;
+  padding: 10px 12px;
+  border-radius: 18px;
+  border: 3px solid transparent;
+  box-shadow: 0 4px 0 rgb(36 32 74 / 8%);
+  text-align: left;
+}
+
+.verbs-app .week-option.is-selected {
+  border-color: var(--primary);
+  box-shadow: 0 4px 0 var(--primary-deep);
+}
+
+.verbs-app .week-option-label {
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--muted-2);
+}
+
+.verbs-app .week-option-number {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.8rem;
+  line-height: 1;
+}
+
+.verbs-app .week-option-range {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--muted-2);
+  line-height: 1.2;
+  overflow-wrap: anywhere;
+}
+
+.verbs-app .week-option-check {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: var(--primary);
+  color: var(--on-primary);
+  display: grid;
+  place-items: center;
+  box-shadow: 0 0 0 3px var(--bg);
+}
+
+.verbs-app .toggle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.verbs-app .toggle > span {
+  display: flex;
+  flex-direction: column;
+}
+
+.verbs-app .toggle input {
+  appearance: none;
+  flex: none;
+  width: 56px;
+  height: 34px;
+  border-radius: 999px;
+  background: var(--locked);
+  position: relative;
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+}
+
+.verbs-app .toggle input::after {
+  content: '';
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: #ffffff;
+  transition: transform 0.15s ease;
+}
+
+.verbs-app .toggle input:checked {
+  background: var(--primary);
+}
+
+.verbs-app .toggle input:checked::after {
+  transform: translateX(22px);
+}
+
+.verbs-app .steps {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+}
+
+.verbs-app .steps span {
+  width: 8px;
+  height: 8px;
+  border-radius: 99px;
+  background: var(--ring);
+}
+
+.verbs-app .steps .is-current {
+  width: 28px;
+  background: var(--primary);
+}
+
+.verbs-app .welcome-head {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.verbs-app .welcome-form {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.verbs-app .fine-print {
+  text-align: center;
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+.verbs-app .more-callout {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 12px 14px;
+  border-radius: 16px;
+  background: var(--tint-4);
+  font-weight: 700;
+}
+
+.verbs-app .more-callout svg {
+  flex: none;
+  margin-top: 1px;
+}
+
+.verbs-app .mission-foot {
+  text-align: center;
+}
+
+.verbs-app .home-head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.verbs-app .home-head .title {
+  flex: 1;
+  overflow-wrap: anywhere;
+}
+
+.verbs-app .avatar {
+  flex: none;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: var(--sun);
+  color: #24204a;
+  display: grid;
+  place-items: center;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.5rem;
+  box-shadow: 0 4px 0 var(--sun-deep);
+}
+
+.verbs-app .mission-head, .verbs-app .path-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.verbs-app .path-head {
+  margin: 8px 0 4px;
+}
+
+.verbs-app .mission-tiles {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.verbs-app .mission-tile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px 4px;
+  border-radius: 16px;
+  font-size: 0.82rem;
+  font-weight: 800;
+  color: var(--muted-2);
+}
+
+.verbs-app .mission-tile strong {
+  font-family: var(--font-display);
+  font-size: 1.6rem;
+  line-height: 1.1;
+  color: var(--text);
+}
+
+.verbs-app .week-path {
+  display: block;
+  width: 100%;
+  max-width: 420px;
+  margin: 0 auto;
+  height: auto;
+  overflow: visible;
+}
+
+.verbs-app .week-path-trail {
+  fill: none;
+  stroke: var(--ring);
+  stroke-width: 6;
+  stroke-linecap: round;
+  stroke-dasharray: 2 12;
+}
+
+.verbs-app .week-path-done {
+  fill: none;
+  stroke: var(--primary);
+  stroke-width: 6;
+  stroke-linecap: round;
+}
+
+.verbs-app .node .node-shadow {
+  fill: transparent;
+}
+
+.verbs-app .node .node-number {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 22px;
+}
+
+.verbs-app .node-done .node-face {
+  fill: var(--ok);
+}
+
+.verbs-app .node-done .node-shadow {
+  fill: var(--ok-deep);
+}
+
+.verbs-app .node-done .node-number {
+  fill: var(--on-ok);
+}
+
+.verbs-app .node-current .node-ring {
+  fill: var(--ring);
+}
+
+.verbs-app .node-current .node-face {
+  fill: var(--primary);
+}
+
+.verbs-app .node-current .node-shadow {
+  fill: var(--primary-deep);
+}
+
+.verbs-app .node-current .node-number {
+  fill: var(--on-primary); font-size: 26px;
+}
+
+.verbs-app .node-open .node-face {
+  fill: var(--surface); stroke: var(--primary); stroke-width: 3;
+}
+
+.verbs-app .node-open .node-number {
+  fill: var(--primary-text);
+}
+
+.verbs-app .node-locked .node-face {
+  fill: var(--locked);
+}
+
+.verbs-app .node-locked .node-number {
+  fill: var(--locked-text);
+}
+
+.verbs-app .node-goal .node-face {
+  fill: var(--pill-star); stroke: var(--sun); stroke-width: 3;
+}
+
+.verbs-app .node-trophy {
+  fill: none; stroke: var(--pill-star-text); stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round;
+}
+
+.verbs-app .node-star {
+  fill: var(--star);
+}
+
+.verbs-app .node-star.is-empty {
+  fill: var(--star-empty);
+}
+
+.verbs-app .node-badge rect {
+  fill: var(--surface);
+  stroke: var(--primary);
+  stroke-width: 2;
+}
+
+.verbs-app .node-badge text {
+  fill: var(--primary-text);
+  font-family: var(--font-body);
+  font-weight: 800;
+  font-size: 12px;
+}
+
+.verbs-app .session-bar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.verbs-app .progress {
+  flex: 1;
+  height: 16px;
+  border-radius: 999px;
+  background: var(--line);
+  overflow: hidden;
+}
+
+.verbs-app .progress span {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: var(--primary);
+  box-shadow: inset 0 -4px 0 var(--primary-deep);
+  transition: width 0.3s ease;
+}
+
+.verbs-app .session-count {
+  flex: none;
+  min-width: 44px;
+  text-align: right;
+  font-weight: 800;
+  font-size: 0.9rem;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.verbs-app .retry-note {
+  text-align: center;
+  font-weight: 800;
+  color: var(--oops-text);
+}
+
+.verbs-app .verb {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(2.2rem, 10vw, 2.7rem);
+  line-height: 1.1;
+  overflow-wrap: anywhere;
+}
+
+.verbs-app .verb-big {
+  font-size: clamp(2.4rem, 11vw, 3rem);
+}
+
+.verbs-app .verb-past {
+  color: var(--primary-text);
+}
+
+.verbs-app .verb-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+}
+
+.verbs-app .meaning-chip {
+  padding: 8px 16px;
+  border-radius: 999px;
+  background: var(--ok-soft);
+  color: var(--ok-text);
+  font-weight: 800;
+  font-size: 1.02rem;
+  text-align: center;
+}
+
+.verbs-app .meaning-chip-plain {
+  padding: 6px 14px;
+  background: var(--surface);
+  color: var(--muted-2);
+}
+
+.verbs-app .present {
+  align-items: center;
+  text-align: center;
+  gap: 6px;
+}
+
+.verbs-app .sticker {
+  align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: var(--sun);
+  color: #24204a;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 0.95rem;
+  transform: rotate(-3deg);
+  box-shadow: 0 3px 0 var(--sun-deep);
+  margin-bottom: 6px;
+}
+
+.verbs-app .form-label {
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.verbs-app .form-arrow {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: var(--bg);
+  color: var(--primary-text);
+  display: grid;
+  place-items: center;
+}
+
+.verbs-app .present .meanings {
+  margin-top: 8px;
+}
+
+.verbs-app .meanings {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.verbs-app .meaning-chips {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+}
+
+.verbs-app .present .note {
+  margin-top: 6px;
+}
+
+.verbs-app .family {
+  background: var(--surface-2);
+  border-radius: 22px;
+  padding: 14px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.verbs-app .family-name {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.12rem;
+}
+
+.verbs-app .family-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.verbs-app .family-chip {
+  padding: 5px 10px;
+  border-radius: 12px;
+  background: var(--surface);
+  font-weight: 800;
+  font-size: 0.88rem;
+}
+
+.verbs-app .family-hint {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--muted-2);
+}
+
+.verbs-app .example {
+  background: var(--surface);
+  border-radius: 22px;
+  padding: 14px 16px;
+  box-shadow: 0 4px 0 var(--line);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.verbs-app .example-text {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.verbs-app .example-text p:first-child {
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+
+.verbs-app .example-text strong {
+  color: var(--primary-text);
+  font-weight: 800;
+}
+
+.verbs-app .prompt {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  text-align: center;
+  padding: 8px 0 4px;
+}
+
+.verbs-app .prompt-question {
+  font-weight: 800;
+  font-size: 0.95rem;
+  color: var(--muted);
+}
+
+.verbs-app .choices {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.verbs-app .choice {
+  position: relative;
+  min-height: 82px;
+  padding: 8px 10px;
+  border-radius: 20px;
+  border: 3px solid var(--line);
+  background: var(--surface);
+  box-shadow: 0 5px 0 var(--line);
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1.6rem;
+  line-height: 1.1;
+  overflow-wrap: anywhere;
+  transition:
+  opacity 0.15s ease,
+  transform 0.08s ease;
+}
+
+.verbs-app .choice.is-medium {
+  font-size: 1.35rem;
+}
+
+.verbs-app .choice.is-long {
+  font-size: 1.1rem;
+}
+
+.verbs-app .choice:active:not(:disabled) {
+  transform: translateY(3px);
+}
+
+.verbs-app .choice:disabled {
+  cursor: default;
+}
+
+.verbs-app .choice.is-correct {
+  border-color: var(--ok);
+  background: var(--ok-soft);
+  color: var(--ok-text);
+  box-shadow: 0 5px 0 var(--ok);
+  font-weight: 700;
+}
+
+.verbs-app .choice.is-wrong {
+  border-color: var(--oops);
+  background: var(--oops-soft);
+  color: var(--oops-text);
+  box-shadow: 0 5px 0 var(--oops);
+}
+
+.verbs-app .choice.is-dim {
+  opacity: 0.45;
+}
+
+.verbs-app .choice-badge {
+  position: absolute;
+  top: -10px;
+  right: -8px;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: var(--ok);
+  color: var(--on-ok);
+  display: grid;
+  place-items: center;
+  box-shadow: 0 0 0 3px var(--bg);
+}
+
+.verbs-app .write {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.verbs-app .write-input {
+  width: 100%;
+  min-height: 68px;
+  border-radius: 20px;
+  border: 3px solid var(--line);
+  background: var(--surface);
+  text-align: center;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1.9rem;
+}
+
+.verbs-app .write-input:focus {
+  outline: none;
+  border-color: var(--primary);
+}
+
+.verbs-app .write-input.is-correct {
+  border-color: var(--ok);
+  background: var(--ok-soft);
+}
+
+.verbs-app .write-input.is-wrong {
+  border-color: var(--oops);
+  background: var(--oops-soft);
+}
+
+.verbs-app .sheet {
+  margin: auto calc(-1 * var(--gutter)) calc(-1 * var(--pad-bottom));
+  padding: 20px var(--gutter) calc(20px + var(--pad-bottom));
+  border-radius: 32px 32px 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  animation: verbs-rise 0.25s ease-out;
+}
+
+.verbs-app .sheet.is-ok {
+  background: var(--ok-soft);
+}
+
+.verbs-app .sheet.is-oops {
+  background: var(--oops-soft);
+}
+
+.verbs-app .sheet-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.verbs-app .sheet-text {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+  min-width: 0;
+}
+
+.verbs-app .sheet-title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.55rem;
+  line-height: 1.1;
+}
+
+.verbs-app .is-ok .sheet-title {
+  color: var(--ok-text);
+}
+
+.verbs-app .is-oops .sheet-title {
+  color: var(--oops-text);
+}
+
+.verbs-app .sheet-message {
+  font-weight: 800;
+}
+
+.verbs-app .sheet-answer {
+  font-size: 1.05rem;
+  font-weight: 800;
+}
+
+.verbs-app .sheet-note {
+  font-weight: 700;
+  color: var(--muted);
+}
+
+.verbs-app .sheet-retry {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--muted-2);
+}
+
+.verbs-app .sheet .pill {
+  min-height: 30px;
+  padding: 0 10px;
+  background: var(--surface);
+  color: var(--pill-star-text);
+}
+
+.verbs-app .tiles {
+  background: var(--surface);
+  border-radius: 20px;
+  padding: 12px 14px;
+  display: grid;
+  grid-template-columns: 30px minmax(0, 1fr);
+  align-items: center;
+  row-gap: 8px;
+}
+
+.verbs-app .tiles-label {
+  font-size: 0.88rem;
+  font-weight: 800;
+  color: var(--muted);
+}
+
+.verbs-app .tile-row {
+  display: flex;
+  gap: 4px;
+}
+
+.verbs-app .tile {
+  flex: 0 1 34px;
+  min-width: 0;
+  height: 40px;
+  border-radius: 10px;
+  background: var(--bg);
+  display: grid;
+  place-items: center;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.35rem;
+}
+
+.verbs-app .tile-wrong {
+  background: var(--oops-tile);
+  color: var(--oops-text);
+  text-decoration: line-through;
+}
+
+.verbs-app .tile-right {
+  background: var(--ok);
+  color: var(--on-ok);
+}
+
+.verbs-app .summary {
+  position: relative;
+  align-items: center;
+  text-align: center;
+  gap: 12px;
+  padding-top: 12px;
+}
+
+.verbs-app .confetti {
+  position: absolute;
+  inset: 0 0 auto;
+  width: 100%;
+  height: auto;
+  pointer-events: none;
+}
+
+.verbs-app .summary .baco, .verbs-app .summary .title {
+  position: relative;
+}
+
+.verbs-app .summary-score {
+  font-size: 1.12rem;
+  font-weight: 800;
+  color: var(--muted-2);
+}
+
+.verbs-app .summary-stars {
+  display: flex;
+  align-items: flex-end;
+  gap: 6px;
+}
+
+.verbs-app .summary-star {
+  display: grid;
+  animation: verbs-pop 0.4s ease-out both;
+}
+
+.verbs-app .summary-star:nth-child(2) {
+  animation-delay: 0.15s;
+}
+
+.verbs-app .summary-star:nth-child(3) {
+  animation-delay: 0.3s;
+}
+
+.verbs-app .summary-tiles {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.verbs-app .summary-tile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: 12px 6px;
+  border-radius: 18px;
+  font-size: 0.8rem;
+  font-weight: 800;
+  color: var(--muted-2);
+}
+
+.verbs-app .summary-tile strong {
+  font-family: var(--font-display);
+  font-size: 1.45rem;
+  line-height: 1.1;
+  color: var(--text);
+}
+
+.verbs-app .missed {
+  width: 100%;
+  text-align: left;
+  gap: 8px;
+}
+
+.verbs-app .missed ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.verbs-app .missed li {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 2px 12px;
+  padding: 10px 12px;
+  border-radius: 14px;
+  background: var(--oops-soft);
+}
+
+.verbs-app .missed li strong {
+  color: var(--oops-text);
+}
+
+.verbs-app .summary-actions {
+  width: 100%;
+  margin-top: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.verbs-app .practice-title {
+  margin: 4px 0 10px;
+}
+
+.verbs-app .practice-tiles {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.verbs-app .practice-tile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 14px 6px 12px;
+  border: 0;
+  border-radius: 20px;
+  box-shadow: 0 5px 0 var(--line);
+  text-align: center;
+}
+
+.verbs-app .practice-tile:active {
+  transform: translateY(3px);
+}
+
+.verbs-app .practice-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 16px;
+  background: var(--surface);
+  display: grid;
+  place-items: center;
+}
+
+.verbs-app .practice-icon-verbs {
+  color: var(--primary-text);
+}
+
+.verbs-app .practice-icon-review {
+  color: var(--ok);
+}
+
+.verbs-app .practice-icon-exam {
+  color: var(--pill-star-text);
+}
+
+.verbs-app .practice-name {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.05rem;
+  line-height: 1.1;
+}
+
+.verbs-app .practice-note {
+  font-size: 0.75rem;
+  font-weight: 800;
+  color: var(--muted-2);
+}
+
+.verbs-app .topbar-title {
+  flex: 1;
+}
+
+.verbs-app .filter-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.verbs-app .filter-chip, .verbs-app .pick-chip, .verbs-app .count-chip {
+  min-height: 40px;
+  padding: 0 16px;
+  border-radius: 999px;
+  border: 3px solid var(--line);
+  background: var(--surface);
+  font-weight: 800;
+  font-size: 0.92rem;
+}
+
+.verbs-app .filter-chip.is-selected, .verbs-app .pick-chip.is-selected, .verbs-app .count-chip.is-selected {
+  border-color: var(--primary);
+  background: var(--primary);
+  color: var(--on-primary);
+}
+
+.verbs-app .legend {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 14px;
+  font-size: 0.82rem;
+  font-weight: 800;
+  color: var(--muted);
+}
+
+.verbs-app .legend li {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.verbs-app .dot {
+  flex: none;
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--unseen-dot);
+}
+
+.verbs-app .dot-learning {
+  background: var(--oops);
+}
+
+.verbs-app .dot-reviewing {
+  background: #e9c335;
+}
+
+.verbs-app .dot-mastered {
+  background: var(--ok);
+}
+
+.verbs-app .verb-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.verbs-app .verb-group-title {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.15rem;
+}
+
+.verbs-app .verb-group-title .muted {
+  font-family: var(--font-body);
+}
+
+.verbs-app .verb-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.verbs-app .verb-item {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 58px;
+  padding: 8px 12px;
+  border: 0;
+  border-radius: 16px;
+  background: var(--surface);
+  box-shadow: 0 3px 0 var(--line);
+  text-align: left;
+  color: var(--muted);
+}
+
+.verbs-app .verb-item.is-unseen {
+  background: transparent;
+  box-shadow: inset 0 0 0 2px var(--line);
+}
+
+.verbs-app .verb-item-text {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.verbs-app .verb-item-base {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.12rem;
+  line-height: 1.2;
+  color: var(--text);
+}
+
+.verbs-app .verb-item-meaning {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--muted);
+}
+
+.verbs-app .verb-item-past {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: var(--primary-text);
+  text-align: right;
+}
+
+.verbs-app .is-unseen .verb-item-base, .verbs-app .is-unseen .verb-item-past {
+  color: var(--muted);
+}
+
+.verbs-app .empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  text-align: center;
+  padding: 16px;
+  font-weight: 700;
+}
+
+.verbs-app .status-chip {
+  align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 12px;
+  border-radius: 999px;
+  background: var(--surface-2);
+  font-weight: 800;
+  font-size: 0.88rem;
+  margin-bottom: 4px;
+}
+
+.verbs-app .status-learning {
+  background: var(--oops-soft); color: var(--oops-text);
+}
+
+.verbs-app .status-reviewing {
+  background: var(--pill-star); color: var(--pill-star-text);
+}
+
+.verbs-app .status-mastered {
+  background: var(--ok-soft); color: var(--ok-text);
+}
+
+.verbs-app .status-chip .dot {
+  width: 10px;
+  height: 10px;
+}
+
+.verbs-app .stat-tiles {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.verbs-app .stat-tile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px 4px;
+  border-radius: 16px;
+  font-size: 0.78rem;
+  font-weight: 800;
+  color: var(--muted-2);
+  text-align: center;
+}
+
+.verbs-app .stat-tile strong {
+  font-family: var(--font-display);
+  font-size: 1.35rem;
+  line-height: 1.15;
+  color: var(--text);
+}
+
+.verbs-app .option-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.verbs-app .option-card {
+  border-radius: 18px;
+  border: 3px solid var(--line);
+  background: var(--surface);
+  box-shadow: 0 4px 0 var(--line);
+}
+
+.verbs-app .option-card.is-selected {
+  border-color: var(--primary);
+  background: var(--surface-2);
+  box-shadow: 0 4px 0 var(--primary-deep);
+}
+
+.verbs-app .option-main {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+  padding: 12px 14px;
+  border: 0;
+  background: transparent;
+  text-align: left;
+}
+
+.verbs-app button.option-card.option-main {
+  border: 3px solid var(--line);
+}
+
+.verbs-app button.option-card.option-main.is-selected {
+  border-color: var(--primary);
+}
+
+.verbs-app .option-main:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.verbs-app .option-title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.08rem;
+}
+
+.verbs-app .option-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding: 0 14px 12px;
+}
+
+.verbs-app .pick-chip {
+  min-height: 36px;
+  padding: 0 12px;
+  font-size: 0.85rem;
+}
+
+.verbs-app .how-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.verbs-app .count-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.verbs-app .count-chips {
+  display: flex;
+  gap: 8px;
+}
+
+.verbs-app .count-chip {
+  min-width: 56px;
+  min-height: 46px;
+  border-radius: 14px;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.05rem;
+}
+
+.verbs-app .flashcard {
+  align-items: center;
+  text-align: center;
+  gap: 8px;
+  min-height: 380px;
+  padding: 24px 20px;
+}
+
+.verbs-app .flashcard-divider {
+  width: 100%;
+  border-top: 3px dashed var(--line);
+  margin: 8px 0;
+}
+
+.verbs-app .flashcard-mystery {
+  width: 84px;
+  height: 84px;
+  border-radius: 50%;
+  background: var(--surface-2);
+  color: var(--primary-text);
+  display: grid;
+  place-items: center;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 2.8rem;
+}
+
+.verbs-app .flashcard .btn {
+  margin-top: auto;
+}
+
+.verbs-app .flashcard-answer {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  animation: verbs-rise 0.25s ease-out;
+}
+
+.verbs-app .flashcard-question {
+  text-align: center;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.3rem;
+}
+
+.verbs-app .flashcard-buttons {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.verbs-app .btn-oops-soft {
+  background: var(--oops-soft);
+  color: var(--oops-text);
+  border: 3px solid var(--oops);
+  box-shadow: 0 5px 0 var(--oops);
+}
+
+.verbs-app .sheet-preview {
+  background: var(--pill-star);
+  border-radius: 20px;
+  padding: 12px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.verbs-app .sheet-preview-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 6px;
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--pill-star-text);
+}
+
+.verbs-app .sheet-preview-given, .verbs-app .sheet-preview-blank {
+  min-height: 36px;
+  border-radius: 10px;
+  padding: 8px;
+  text-transform: none;
+  letter-spacing: 0;
+}
+
+.verbs-app .sheet-preview-given {
+  background: var(--surface-2);
+  color: var(--text);
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  font-weight: 700;
+}
+
+.verbs-app .sheet-preview-blank {
+  background: var(--surface);
+  border: 2px dashed var(--sun-deep);
+}
+
+.verbs-app .toggle-card {
+  padding: 10px 14px;
+  border-radius: 18px;
+  background: var(--surface);
+  box-shadow: 0 3px 0 var(--line);
+  cursor: pointer;
+}
+
+.verbs-app .exam-last {
+  font-weight: 800;
+}
+
+.verbs-app .exam-title {
+  flex: 1;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.3rem;
+  line-height: 1.15;
+}
+
+.verbs-app .exam-clock {
+  flex: none;
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: var(--surface);
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.verbs-app .row-dots {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.verbs-app .row-dots span {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--line);
+}
+
+.verbs-app .row-dots .is-done {
+  background: var(--primary);
+}
+
+.verbs-app .row-dots .is-current {
+  background: var(--surface);
+  box-shadow: 0 0 0 4px var(--primary);
+}
+
+.verbs-app .exam-row-count {
+  text-align: center;
+  font-weight: 800;
+  color: var(--muted);
+}
+
+.verbs-app .exam-row {
+  gap: 14px;
+}
+
+.verbs-app .exam-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.verbs-app .exam-field-label {
+  display: flex;
+  justify-content: space-between;
+}
+
+.verbs-app .exam-given-tag {
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--primary-text);
+}
+
+.verbs-app .exam-given, .verbs-app .exam-input {
+  width: 100%;
+  min-height: 56px;
+  border-radius: 16px;
+  padding: 0 16px;
+  display: flex;
+  align-items: center;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1.4rem;
+}
+
+.verbs-app .exam-given {
+  background: var(--surface-2);
+  font-weight: 700;
+}
+
+.verbs-app .exam-input {
+  border: 3px solid var(--line);
+  background: var(--surface);
+}
+
+.verbs-app .exam-input:focus {
+  outline: none;
+  border-color: var(--primary);
+}
+
+.verbs-app .exam-previous {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.verbs-app .exam-previous-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1rem;
+}
+
+.verbs-app .exam-previous-title .muted {
+  font-family: var(--font-body);
+}
+
+.verbs-app .exam-previous-grid {
+  display: flex;
+  flex-direction: column;
+  border-radius: 16px;
+  background: var(--surface);
+  overflow: hidden;
+}
+
+.verbs-app .exam-previous-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1.2fr;
+  gap: 8px;
+  padding: 8px 12px;
+  border: 0;
+  background: transparent;
+  text-align: left;
+  font-weight: 700;
+  font-size: 0.92rem;
+  overflow-wrap: anywhere;
+}
+
+.verbs-app .exam-previous-row + .exam-previous-row {
+  border-top: 2px solid var(--bg);
+}
+
+.verbs-app .exam-nav {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 12px;
+}
+
+.verbs-app .exam-result-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.verbs-app .exam-result-text {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+}
+
+.verbs-app .exam-result-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+.verbs-app .grade-pill {
+  padding: 4px 12px;
+  border-radius: 999px;
+  background: var(--primary);
+  color: var(--on-primary);
+  font-weight: 800;
+  font-size: 0.88rem;
+}
+
+.verbs-app .exam-table {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.verbs-app .exam-table-head, .verbs-app .exam-table-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1.15fr;
+  gap: 6px;
+}
+
+.verbs-app .exam-table-head {
+  padding: 0 6px;
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.verbs-app .exam-table-row {
+  padding: 6px;
+  border-radius: 14px;
+  background: var(--surface);
+  box-shadow: 0 2px 0 var(--line);
+}
+
+.verbs-app .exam-cell {
+  display: block;
+  min-width: 0;
+  padding: 6px 8px;
+  border-radius: 10px;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 0.95rem;
+  line-height: 1.2;
+  overflow-wrap: anywhere;
+}
+
+.verbs-app .exam-cell.is-given {
+  background: var(--surface-2);
+}
+
+.verbs-app .exam-cell.is-ok {
+  background: var(--ok-soft); color: var(--ok-text);
+}
+
+.verbs-app .exam-cell.is-bad {
+  background: var(--oops-soft); color: var(--oops-text);
+}
+
+.verbs-app .exam-cell-note {
+  display: block;
+  font-family: var(--font-body);
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: var(--muted-2);
+}
+
+.verbs-app .exam-cell-wrong {
+  display: block;
+  text-decoration: line-through;
+  opacity: 0.8;
+}
+
+.verbs-app .exam-cell-fix {
+  display: block;
+  font-weight: 700;
+  color: var(--ok-text);
+}
+
+.verbs-app .legend-swatch {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  border-radius: 4px;
+}
+
+.verbs-app .legend-swatch.is-given {
+  background: var(--surface-2);
+}
+
+.verbs-app .legend-swatch.is-ok {
+  background: var(--ok-soft);
+}
+
+.verbs-app .legend-swatch.is-bad {
+  background: var(--oops-soft);
+}
+
+.verbs-app .exam-table .legend {
+  margin-top: 6px;
+}
+
+.verbs-app .settings .card .muted {
+  margin-top: -6px;
+}
+
+@keyframes verbs-rise {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes verbs-pop {
+  from {
+    opacity: 0;
+    transform: scale(0.3) rotate(-20deg);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .verbs-app * {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+@media (min-width: 700px) {
+  .verbs-app {
+    font-size: 18px;
+  }
+  .verbs-app .app {
+    padding-top: max(32px, env(safe-area-inset-top));
+  }
+  .verbs-app .card {
+    padding: 24px;
+  }
+  .verbs-app .choice {
+    min-height: 96px;
+  }
+}

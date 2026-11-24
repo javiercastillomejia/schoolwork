@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { Suspense, useCallback, useEffect, useState } from 'react';
 import { stopSpeaking } from './lib/speech';
 import { parentOf, parseHash, toHash, type Route } from './lib/router';
 import { Cards } from './screens/Cards';
@@ -11,7 +11,8 @@ import type { UnitScreenProps } from './screens/types';
 import { UnitHome } from './screens/UnitHome';
 import { Welcome } from './screens/Welcome';
 import { emptyStore, loadStore, needsProfile, saveStore, unitKey, unitOf, updateUnit, type Store } from './storage/store';
-import { findUnit, SUBJECTS } from './subjects';
+import { allStudyDays, findUnit, SUBJECTS } from './subjects';
+import { isCustom } from './subjects/types';
 
 interface HistoryState {
   /** Pantallas de la app que hay detrás de esta en el historial. */
@@ -59,6 +60,7 @@ export default function App() {
 
   const { settings } = store;
   let content;
+  let fullScreen = false;
 
   if (needsProfile(settings)) {
     content = (
@@ -85,21 +87,31 @@ export default function App() {
     );
   } else {
     const found = findUnit(route.subject, route.unit);
-    if (!found) {
+    if (found && isCustom(found.unit)) {
+      // Unidad con app propia (los verbos): a pantalla completa, con su propio diseño.
+      const { App: UnitApp } = found.unit;
+      fullScreen = true;
+      content = (
+        <Suspense fallback={<p className="loading">Cargando…</p>}>
+          <UnitApp name={settings.name} age={settings.age} onExit={back} />
+        </Suspense>
+      );
+    } else if (!found || isCustom(found.unit)) {
       content = <Hub store={store} onOpen={(subject, unit) => go({ name: 'unit', subject, unit })} onSettings={() => go({ name: 'settings' })} />;
     } else {
-      const key = unitKey(found.subject.id, found.unit.id);
+      const unit = found.unit;
+      const key = unitKey(found.subject.id, unit.id);
       const props: UnitScreenProps = {
         subject: found.subject,
-        unit: found.unit,
+        unit,
         progress: unitOf(store, key),
         settings,
-        studyDays: store.studyDays,
+        studyDays: allStudyDays(store),
         update,
         updateUnit: (change) => setStore((s) => updateUnit(s, key, change)),
         go,
         back,
-        at: { subject: found.subject.id, unit: found.unit.id },
+        at: { subject: found.subject.id, unit: unit.id },
       };
       if (route.name === 'unit') content = <UnitHome {...props} />;
       else if (route.name === 'topic') content = <TopicScreen key={route.topic} {...props} topicId={route.topic} />;
@@ -117,6 +129,8 @@ export default function App() {
   useEffect(() => {
     document.documentElement.dataset.theme = theme;
   }, [theme]);
+
+  if (fullScreen) return content;
 
   return (
     <div className="app">

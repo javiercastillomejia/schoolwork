@@ -1,9 +1,10 @@
 import type { ReactNode } from 'react';
 import { Koala } from '../mascots/Koala';
 import { Seal } from '../mascots/Seal';
+import { Baco } from '../subjects/english/irregular-verbs/app/components/Baco';
 import type { MascotInfo, MascotMood } from '../mascots/types';
 
-const ART = { koala: Koala, seal: Seal } as const;
+const ART = { koala: Koala, seal: Seal, chameleon: Baco } as const;
 
 export function Mascot({ mascot, mood = 'normal', size = 120 }: { mascot: MascotInfo; mood?: MascotMood; size?: number }) {
   const Art = ART[mascot.art];

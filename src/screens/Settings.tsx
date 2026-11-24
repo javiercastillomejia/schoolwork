@@ -4,6 +4,7 @@ import { Icon } from '../components/Icon';
 import { canSpeak } from '../lib/speech';
 import { cleanName, unitKey, type Settings as SettingsData, type Store } from '../storage/store';
 import { SUBJECTS } from '../subjects';
+import { isCustom, type Unit } from '../subjects/types';
 
 interface Props {
   store: Store;
@@ -25,7 +26,13 @@ export function Settings({ store, onChange, onResetUnit, onResetAll, onBack }: P
   }
 
   const units = SUBJECTS.flatMap((subject) =>
-    subject.units.map((unit) => ({ key: unitKey(subject.id, unit.id), label: `${subject.name} · ${unit.label}`, title: unit.title, lang: unit.lang })),
+    subject.units.map((unit: Unit) => ({
+      key: unitKey(subject.id, unit.id),
+      label: `${subject.name} · ${unit.label}`,
+      title: unit.label === unit.title ? '' : unit.title,
+      lang: unit.lang,
+      reset: isCustom(unit) ? unit.reset : undefined,
+    })),
   );
 
   return (
@@ -96,7 +103,8 @@ export function Settings({ store, onChange, onResetUnit, onResetAll, onBack }: P
                 type="button"
                 className="btn btn-danger"
                 onClick={() => {
-                  onResetUnit(unit.key);
+                  if (unit.reset) unit.reset();
+                  else onResetUnit(unit.key);
                   setConfirm(null);
                 }}
               >
@@ -114,6 +122,7 @@ export function Settings({ store, onChange, onResetUnit, onResetAll, onBack }: P
             type="button"
             className="btn btn-danger"
             onClick={() => {
+              units.forEach((unit) => unit.reset?.());
               onResetAll();
               setConfirm(null);
             }}

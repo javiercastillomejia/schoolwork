@@ -9,6 +9,7 @@ Publicada en **https://javiercastillomejia.github.io/schoolwork/**
 | Asignatura | Mascota | Unidades |
 | --- | --- | --- |
 | Natural Science (4º de Primaria, Anaya) | 🐨 **Koa, el koala** (gana una hoja de eucalipto por cada acierto a la primera) | Unit 2 · *Animals and human beings*: 10 temas, 114 preguntas y 25 palabras |
+| English | 🦎 **Baco, el camaleón** (cambia de color igual que los verbos irregulares cambian de forma; una estrella por cada acierto a la primera) | *Irregular verbs*: los 74 verbos de la hoja de clase en 11 semanas (la app de verbos que se hizo primero, ahora dentro de Schoolwork) |
 | Matemáticas (4º de Primaria, Anaya) | 🦭 **Lola, la foca** (gana un pez por cada acierto a la primera; lleva una pelota partida en cuartos) | Unidad 3 · *Las fracciones*: 7 apartados del temario, la hoja de repaso del cole (26 ejercicios) y 16 palabras |
 
 ## Cómo funciona
@@ -32,12 +33,23 @@ Publicada en **https://javiercastillomejia.github.io/schoolwork/**
 
 El progreso se guarda en el navegador del dispositivo (localStorage). Se puede borrar por unidad desde **Ajustes**.
 
+### English · Irregular verbs
+
+Es la app de verbos irregulares tal cual (Baco, semanas, presentar cada verbo, elegir y escribir con corrección de erratas, «Mis verbos», repaso a su aire y examen en tabla como la hoja), metida como unidad con **app propia**: se abre a pantalla completa con sus colores. El nombre y la edad los pone Schoolwork (se cambian en los ajustes generales) y la racha es común a todas las asignaturas. Su progreso se guarda aparte (`verbos-irregulares:v1`).
+
+El progreso que hubiera en la app antigua (`zunoagency.github.io/Irregular-verbs`) no pasa solo a esta: cada web guarda sus datos por separado en el navegador.
+
 ## Estructura
 
 ```
 src/
   subjects/
     index.ts                     lista de asignaturas (SUBJECTS)
+    english/
+      index.ts                   asignatura: colores (violeta) y mascota (Baco)
+      irregular-verbs/
+        index.ts                 unidad con app propia: resumen para el inicio y borrar progreso
+        app/                     la app de verbos (su motor, pantallas, tests y estilos en verbs.css)
     matematicas/
       index.ts                   asignatura: colores (océano) y mascota (Lola)
       unidad-3/
@@ -83,6 +95,10 @@ Las direcciones son del tipo `#/natural-science/unit-2/topic/char`, así que se 
 5. `npm test` comprueba los datos. Si guardas también el `CONTENT.md` de la unidad, copia `content.test.ts` y ajusta los números.
 
 Las fichas de estudio admiten estos bloques (ver `src/core/types.ts`): `heading`, `p`, `list`, `table`, `pairs`, `tip`, `note` (nota en español para la familia, no se lee en voz alta), `dialogue` (cómic), `tree` (mapa conceptual), `steps` y `figure` (barra, círculo, grupo o recta numérica). Las palabras clave se escriben entre `**dobles asteriscos**` y las fracciones entre corchetes: `[3/4]`, `[2 1/2]` (número mixto) o `[?/8]` (hueco). En español, las fracciones se leen en voz alta con palabras («tres cuartos»).
+
+### Unidades con app propia
+
+Si una unidad necesita algo muy distinto (como los verbos), puede traer su propia app: un `CustomUnit` (ver `src/subjects/types.ts`) con su componente, un resumen para el inicio (porcentaje, reto de hoy y días estudiados) y cómo borrar su progreso. Sus estilos deben ir dentro de un contenedor propio para no mezclarse con los demás (los verbos usan `.verbs-app`).
 
 ## Cómo añadir una asignatura
 
